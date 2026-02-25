@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Сергей Алексеевич Лебедев | Основоположник отечественной вычислительной техники</title>
+    <!-- Favicon - микросхема -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧠</text></svg>">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+        }
+
+        body {
+            background: #f0f4f8;
+            color: #1e2b3a;
+            line-height: 1.6;
+            transition: background 0.3s, color 0.3s;
+        }
+
+        body.dark-theme {
+            background: #1a1a2e;
+            color: #e0e0e0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        #progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 5px;
+            background: #ffb347;
+            width: 0%;
+            z-index: 1000;
+            transition: width 0.1s;
+        }
+
+        .hero {
+            background: linear-gradient(145deg, #0b2545, #1b3b5c);
+            color: white;
+            padding: 60px 0 40px;
+            text-align: center;
+            border-bottom: 5px solid #ffb347;
+            position: relative;
+        }
+
+        #theme-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: white;
+            border: none;
+            border-radius: 30px;
+            padding: 8px 20px;
+            cursor: pointer;
+            font-weight: bold;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            transition: transform 0.2s;
+            z-index: 10;
+        }
+
+        #theme-toggle:hover {
+            transform: scale(1.05);
+        }
+
+        .hero h1 {
+            font-size: 3.2rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            margin-bottom: 10px;
+        }
+
+        .hero .subhead {
+            font-size: 1.4rem;
+            opacity: 0.9;
+            margin-bottom: 30px;
+        }
+
+        .hero-avatar {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid #ffb347;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+            margin: 20px auto;
+            display: block;
+            background: #2c4c6e;
+        }
+
+        /* ИСПРАВЛЕННЫЙ БЛОК "КТО ЭТО?" */
+        .who-block {
+            font-size: 1.3rem;
+            text-align: center;
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 60px;
+            transition: background 0.3s, color 0.3s;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+
+        body.dark-theme .who-block {
+            background: #2a2a3e;
+            color: #ffffff;
+        }
+
+        .quote-block {
+            background: #ffb347;
+            color: #0b2545;
+            padding: 30px;
+            border-radius: 50px;
+            margin: 30px 0;
+            text-align: center;
+            font-size: 1.3rem;
+            font-weight: 500;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        body.dark-theme .quote-block {
+            color: #0b2545; /* оставляем тёмный текст на жёлтом */
+        }
+
+        section {
+            margin: 60px 0;
+        }
+
+        .section-title {
+            font-size: 2.4rem;
+            font-weight: 600;
+            color: #0b2545;
+            text-align: center;
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        body.dark-theme .section-title {
+            color: #ffb347;
+        }
+
+        .section-title:after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 4px;
+            background: #ffb347;
+            margin: 12px auto 0;
+            border-radius: 2px;
+        }
+
+        .random-btn-container {
+            text-align: center;
+            margin: 30px 0 10px;
+        }
+
+        .random-fact-btn {
+            background: #ffb347;
+            border: none;
+            color: #0b2545;
+            font-size: 1.4rem;
+            font-weight: 700;
+            padding: 16px 40px;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 8px 0 #b16d1a, 0 10px 20px rgba(0,0,0,0.1);
+            transition: all 0.1s ease;
+            border: 2px solid white;
+            letter-spacing: 0.5px;
+        }
+
+        .random-fact-btn:active {
+            transform: translateY(8px);
+            box-shadow: 0 0 0 #b16d1a, 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        #fact-display {
+            background: white;
+            border-radius: 40px;
+            padding: 20px 30px;
+            max-width: 800px;
+            margin: 30px auto 0;
+            font-size: 1.3rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border-left: 8px solid #ffb347;
+            min-height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        body.dark-theme #fact-display {
+            background: #2a2a3e;
+            color: #e0e0e0;
+        }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .fact-card {
+            background: white;
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+
+        body.dark-theme .fact-card {
+            background: #2a2a3e;
+        }
+
+        .fact-card:hover {
+            transform: translateY(-8px);
+        }
+
+        .card-img {
+            width: 100%;
+            height: 220px;
+            background: #b0c4de;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #1e3a5f;
+            font-style: italic;
+        }
+
+        .card-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .card-content {
+            padding: 25px;
+        }
+
+        .card-content h3 {
+            font-size: 1.9rem;
+            color: #0b2545;
+            margin-bottom: 15px;
+        }
+
+        body.dark-theme .card-content h3 {
+            color: #ffb347;
+        }
+
+        .card-content p {
+            font-size: 1.05rem;
+            color: #2c3e50;
+        }
+
+        body.dark-theme .card-content p {
+            color: #b0b0b0;
+        }
+
+        .gallery {
+            margin: 40px 0;
+        }
+
+        .gallery-scroll {
+            display: flex;
+            gap: 20px;
+            overflow-x: auto;
+            padding: 20px 0;
+            scrollbar-width: thin;
+            scrollbar-color: #ffb347 #e0e0e0;
+        }
+
+        .gallery-scroll::-webkit-scrollbar {
+            height: 8px;
+        }
+
+        .gallery-scroll::-webkit-scrollbar-track {
+            background: #e0e0e0;
+            border-radius: 10px;
+        }
+
+        .gallery-scroll::-webkit-scrollbar-thumb {
+            background: #ffb347;
+            border-radius: 10px;
+        }
+
+        .gallery-scroll img {
+            height: 200px;
+            border-radius: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            transition: transform 0.3s;
+        }
+
+        .gallery-scroll img:hover {
+            transform: scale(1.05);
+        }
+
+        .timeline {
+            background: white;
+            border-radius: 40px;
+            padding: 40px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+        }
+
+        body.dark-theme .timeline {
+            background: #2a2a3e;
+        }
+
+        .timeline-item {
+            display: flex;
+            gap: 30px;
+            margin-bottom: 25px;
+            border-bottom: 1px dashed #ccc;
+            padding-bottom: 20px;
+        }
+
+        body.dark-theme .timeline-item {
+            border-bottom-color: #444;
+        }
+
+        .timeline-year {
+            min-width: 120px;
+            font-size: 2rem;
+            font-weight: 700;
+            color: #ffb347;
+            text-shadow: 2px 2px 0 #f0e6d2;
+        }
+
+        body.dark-theme .timeline-year {
+            text-shadow: 2px 2px 0 #1a1a2e;
+        }
+
+        .timeline-desc {
+            font-size: 1.15rem;
+        }
+
+        .details-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 25px;
+            justify-content: center;
+        }
+
+        .detail-item {
+            background: white;
+            border-radius: 30px;
+            padding: 25px;
+            flex: 1 1 250px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+            border-bottom: 5px solid #ffb347;
+        }
+
+        body.dark-theme .detail-item {
+            background: #2a2a3e;
+        }
+
+        .detail-item h4 {
+            font-size: 1.5rem;
+            color: #0b2545;
+            margin-bottom: 15px;
+        }
+
+        body.dark-theme .detail-item h4 {
+            color: #ffb347;
+        }
+
+        .sources {
+            background: #1e2f4a;
+            color: white;
+            border-radius: 50px;
+            padding: 40px;
+        }
+
+        .sources h2 {
+            color: white;
+        }
+
+        .sources ul {
+            list-style: none;
+            font-size: 1.1rem;
+        }
+
+        .sources li {
+            margin-bottom: 12px;
+        }
+
+        .sources a {
+            color: #ffb347;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .sources a:hover {
+            text-decoration: underline;
+        }
+
+        footer {
+            background: #0b2545;
+            color: white;
+            text-align: center;
+            padding: 30px 0;
+            border-radius: 40px 40px 0 0;
+            margin-top: 80px;
+        }
+
+        #go-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: #ffb347;
+            border: none;
+            border-radius: 50px;
+            padding: 15px 25px;
+            cursor: pointer;
+            font-weight: bold;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            display: none;
+            z-index: 999;
+            transition: transform 0.2s;
+        }
+
+        #go-top:hover {
+            transform: translateY(-3px);
+        }
+
+        @media (max-width: 700px) {
+            .hero h1 { font-size: 2.4rem; }
+            .timeline-item { flex-direction: column; gap: 5px; }
+            .section-title { font-size: 2rem; }
+            #theme-toggle { 
+                position: relative; 
+                top: 0; 
+                right: 0; 
+                margin-bottom: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div id="progress-bar"></div>
+
+<div class="hero">
+    <button id="theme-toggle">🌙 Тёмная тема</button>
+    <div class="container">
+        <h1>Сергей Алексеевич Лебедев</h1>
+        <div class="subhead">1902–1974 • Основоположник советской вычислительной техники</div>
+        <!-- Фото Лебедева -->
+        <img class="hero-avatar" src="https://museum.mipt.ru/wp-content/uploads/2016/08/-%D1%81%D0%B5%D1%80%D0%B3%D0%B5%D0%B9-%D0%B0%D0%BB%D0%B5%D0%BA%D1%81%D0%B5%D0%B5%D0%B2%D0%B8%D1%87-e1472194865119.jpg" alt="С.А. Лебедев">
+    </div>
+</div>
+
+<div class="container">
+
+    <div class="random-btn-container">
+        <button class="random-fact-btn" id="randomFactBtn">🔮 Случайный факт о Лебедеве</button>
+        <div id="fact-display">Нажми на кнопку — узнаешь что-то новое!</div>
+    </div>
+
+    <!-- ИСПРАВЛЕННЫЙ БЛОК "КТО ЭТО?" -->
+    <section>
+        <h2 class="section-title">Кто это?</h2>
+        <div class="who-block">
+            Академик АН СССР, создатель первой в континентальной Европе электронно-вычислительной машины (МЭСМ). 
+            Разработал архитектурные принципы, которые до сих пор используются в процессорах. 
+            Воспитал целую научную школу и определил путь развития советского компьютеростроения.
+        </div>
+    </section>
+
+    <div class="quote-block" id="quote-block">
+        💬 <span id="quote">Загрузка...</span>
+    </div>
+
+    <section>
+        <h2 class="section-title">Три кита: главные достижения</h2>
+        <div class="cards-grid">
+            <!-- Факт 1: МЭСМ -->
+            <div class="fact-card">
+                <div class="card-img">
+                    <img src="https://upload.wikimedia.org/wikipedia/ru/1/1e/MESM.jpg" alt="МЭСМ">
+                </div>
+                <div class="card-content">
+                    <h3>МЭСМ (1951)</h3>
+                    <p><strong>Малая электронная счётная машина</strong> — первая ЭВМ в СССР и всей континентальной Европе. Содержала около 6000 электронных ламп, выполняла 50 операций в секунду. Занимала двухэтажное здание бывшего монастыря в Феофании. Запущена 25 декабря 1951 года.</p>
+                </div>
+            </div>
+            <!-- Факт 2: БЭСМ -->
+            <div class="fact-card">
+                <div class="card-img">
+                    <img src="https://www.computer-museum.ru/images/histussr/becm2020_1.jpg" alt="БЭСМ">
+                </div>
+                <div class="card-content">
+                    <h3>БЭСМ (1953)</h3>
+                    <p><strong>Большая электронная счётная машина</strong>. В момент создания — самая производительная ЭВМ в Европе (до 10 000 операций/с). В 1956 году произвела фурор на конференции в Дармштадте. На БЭСМ рассчитывали траекторию полёта ракеты к Луне.</p>
+                </div>
+            </div>
+            <!-- Факт 3: Архитектура / параллелизм -->
+            <div class="fact-card">
+                <div class="card-img">
+                    <img src="https://besm-6.ru/assets/vgWQhT.jpg" alt="Пульт БЭСМ">
+                </div>
+                <div class="card-content">
+                    <h3>Параллельные вычисления</h3>
+                    <p>Лебедев <strong>независимо от фон Неймана</strong> сформулировал принципы построения ЭВМ (1948). Главная идея — распараллеливание процессов. В БЭСМ-6 впервые в мире применил конвейерную обработку (водопровод). Эти принципы лежат в основе всех современных процессоров.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="gallery">
+        <h2 class="section-title">📸 Фотогалерея</h2>
+        <div class="gallery-scroll">
+            <img src="https://upload.wikimedia.org/wikipedia/ru/1/1e/MESM.jpg" alt="МЭСМ">
+            <img src="https://www.computer-museum.ru/images/histussr/becm2020_1.jpg" alt="БЭСМ">
+            <img src="https://besm-6.ru/assets/vgWQhT.jpg" alt="Пульт БЭСМ">
+            <img src="https://filearchive.cnews.ru/img/files/2017/06/15/mesm.png" alt="МЭСМ">
+            <img src="https://filearchive.cnews.ru/img/files/2017/06/15/strela3.png" alt="Стрела">
+            <img src="https://cdn.ruwiki.ru/ruwiki/files/thumb/d/d0/%D0%91%D0%AD%D0%A1%D0%9C-1.png/600px-%D0%91%D0%AD%D0%A1%D0%9C-1.png" alt="БЭСМ-1">
+        </div>
+    </section>
+
+    <section>
+        <h2 class="section-title">Жизненный путь</h2>
+        <div class="timeline">
+            <div class="timeline-item"><span class="timeline-year">1902</span><span class="timeline-desc">Родился в Нижнем Новгороде.</span></div>
+            <div class="timeline-item"><span class="timeline-year">1928</span><span class="timeline-desc">Окончил МВТУ им. Баумана, инженер-электрик.</span></div>
+            <div class="timeline-item"><span class="timeline-year">1930-е</span><span class="timeline-desc">Работа в энергетике, докторская, системы стабилизации танковых орудий и самонаводящиеся торпеды в войну.</span></div>
+            <div class="timeline-item"><span class="timeline-year">1946</span><span class="timeline-desc">Переезд в Киев, директор Института энергетики АН УССР.</span></div>
+            <div class="timeline-item"><span class="timeline-year">1948</span><span class="timeline-desc">Начало работы над МЭСМ, независимо сформулировал принципы фон Неймана.</span></div>
+            <div class="timeline-item"><span class="timeline-year">1950</span><span class="timeline-desc">Первый пробный пуск МЭСМ (6 ноября).</span></div>
+            <div class="timeline-item"><span class="timeline-year">1951</span><span class="timeline-desc">МЭСМ принята в эксплуатацию (25 декабря).</span></div>
+            <div class="timeline-item"><span class="timeline-year">1952</span><span class="timeline-desc">Вернулся в Москву, директор ИТМиВТ.</span></div>
+            <div class="timeline-item"><span class="timeline-year">1953</span><span class="timeline-desc">БЭСМ-1, избран академиком АН СССР.</span></div>
+            <div class="timeline-item"><span class="timeline-year">1956</span><span class="timeline-desc">БЭСМ признана лучшей в Европе, Герой Соцтруда.</span></div>
+            <div class="timeline-item"><span class="timeline-year">1967</span><span class="timeline-desc">БЭСМ-6 (1 млн оп/с) — выпускалась до середины 1980-х.</span></div>
+            <div class="timeline-item"><span class="timeline-year">1974</span><span class="timeline-desc">Умер в Москве, похоронен на Новодевичьем кладбище.</span></div>
+        </div>
+    </section>
+
+    <section>
+        <h2 class="section-title">Малоизвестные факты</h2>
+        <div class="details-grid">
+            <div class="detail-item"><h4>🏅 Международное признание</h4>В 1996 году (посмертно) IEEE Computer Society наградил Лебедева медалью Computer Pioneer — «за новаторские работы в области вычислительной техники».</div>
+            <div class="detail-item"><h4>🔧 Оружие войны</h4>В годы Великой Отечественной разрабатывал системы стабилизации танковых орудий и самонаводящиеся торпеды.</div>
+            <div class="detail-item"><h4>📚 Учитель</h4>Создал кафедру вычислительной техники в МФТИ, воспитал десятки учёных, включая будущих академиков.</div>
+            <div class="detail-item"><h4>⚡ Принципиальность</h4>Резко выступал против копирования американской IBM-360, считал, что СССР должен создавать собственные архитектуры.</div>
+        </div>
+    </section>
+
+    <section class="sources">
+        <h2 class="section-title">📌 Источники информации</h2>
+        <ul>
+            <li>• Виртуальный компьютерный музей — <a href="https://www.computer-museum.ru" target="_blank">computer-museum.ru</a></li>
+            <li>• Президентская библиотека им. Ельцина — <a href="https://www.prlib.ru" target="_blank">prlib.ru</a></li>
+            <li>• Большая российская энциклопедия (статья «Лебедев»)</li>
+            <li>• Википедия: <a href="https://ru.wikipedia.org/wiki/Лебедев,_Сергей_Алексеевич" target="_blank">С.А. Лебедев</a> , <a href="https://ru.wikipedia.org/wiki/МЭСМ" target="_blank">МЭСМ</a></li>
+            <li>• Журнал «Наука и жизнь», 2002, №5 (к 100-летию)</li>
+            <li>• Сайт <a href="https://besm-6.ru" target="_blank">besm-6.ru</a> — архив документов и фотографий</li>
+        </ul>
+    </section>
+
+</div>
+
+<footer>
+    <p>Проект по истории России</p>
+    <p>Выполнили: Трубицин Тимофей и Ибраев Кирилл | Группа: ИТ-12</p>
+    <p>Пермь, 2026</p>
+    <p style="opacity:0.8; font-size:0.9rem; margin-top:20px;">Сайт создан в рамках проекта по истории</p>
+</footer>
+
+<button id="go-top">↑ Наверх</button>
+
+<script>
+    // ========== СЛУЧАЙНЫЙ ФАКТ ==========
+    const facts = [
+        "Лебедев независимо от фон Неймана сформулировал основные принципы архитектуры ЭВМ в 1948 году.",
+        "МЭСМ была первой ЭВМ в континентальной Европе.",
+        "БЭСМ на момент создания была самой быстрой в Европе (до 10 000 операций/с).",
+        "В 1996 году IEEE Computer Society наградил Лебедева медалью Computer Pioneer Award посмертно.",
+        "Во время войны Лебедев разрабатывал системы стабилизации танковых орудий и самонаводящиеся торпеды.",
+        "Лебедев создал 15 типов ЭВМ — от ламповых до суперкомпьютеров на интегральных схемах.",
+        "БЭСМ-6 (1967) имела производительность 1 млн операций/с и выпускалась почти 20 лет.",
+        "Лебедев был не только инженером, но и заведовал кафедрой в МФТИ, воспитал целую научную школу.",
+        "В 1956 году доклад о БЭСМ на конференции в Дармштадте вызвал сенсацию.",
+        "МЭСМ занимала двухэтажное здание бывшего монастыря в Феофании под Киевом.",
+        "Первоначально МЭСМ создавалась как модель (буква «М» означала «модель»).",
+        "Комиссию по приёмке МЭСМ в 1951 году возглавлял будущий президент АН СССР М.В. Келдыш.",
+        "Лебедев начал заниматься вычислительной техникой в 45 лет, будучи уже известным энергетиком.",
+        "В БЭСМ-6 Лебедев впервые применил конвейерную (водопроводную) обработку команд.",
+        "Лебедев резко критиковал решение копировать американскую IBM-360 (ЕС ЭВМ).",
+        "На БЭСМ-1 рассчитывали траекторию ракеты, доставившей вымпел СССР на Луну.",
+        "Сергей Лебедев родился в Нижнем Новгороде 2 ноября 1902 года.",
+        "Помимо компьютеров, Лебедев занимался проблемами устойчивости энергосистем и участвовал в плане ГОЭЛРО.",
+        "В МЭСМ использовалось около 6000 электронных ламп, она потребляла 25 кВт.",
+        "Идея распараллеливания вычислений (конвейер) — ключевое изобретение Лебедева, используемое до сих пор."
+    ];
+
+    const factDisplay = document.getElementById('fact-display');
+    const randomBtn = document.getElementById('randomFactBtn');
+
+    function showRandomFact() {
+        const randomIndex = Math.floor(Math.random() * facts.length);
+        factDisplay.textContent = '🔹 ' + facts[randomIndex];
+    }
+
+    randomBtn.addEventListener('click', showRandomFact);
+
+    // ========== ПРОГРЕСС-БАР ==========
+    window.addEventListener('scroll', () => {
+        const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+        const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+        const scrolled = (winScroll / height) * 100;
+        document.getElementById('progress-bar').style.width = scrolled + '%';
+    });
+
+    // ========== ПЕРЕКЛЮЧАТЕЛЬ ТЕМЫ ==========
+    const themeToggle = document.getElementById('theme-toggle');
+    let isDark = false;
+
+    themeToggle.addEventListener('click', () => {
+        if (!isDark) {
+            document.body.classList.add('dark-theme');
+            themeToggle.textContent = '☀️ Светлая тема';
+        } else {
+            document.body.classList.remove('dark-theme');
+            themeToggle.textContent = '🌙 Тёмная тема';
+        }
+        isDark = !isDark;
+    });
+
+    // ========== ЦИТАТА ДНЯ ==========
+    const quotes = [
+        '"Инженер должен думать о том, как сделать машину, а не о том, как сделать машину похожей на иностранную."',
+        '"Наука — это единственный способ понять истину."',
+        '"Мы должны идти своим путём, а не копировать чужие разработки."',
+        '"ЭВМ — это не просто счётная машина, это новый инструмент познания."',
+        '"Молодёжь должна учиться на своих ошибках, а не на чужих успехах."'
+    ];
+    document.getElementById('quote').textContent = quotes[Math.floor(Math.random() * quotes.length)];
+
+    // ========== КНОПКА НАВЕРХ ==========
+    const goTop = document.getElementById('go-top');
+    
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 500) {
+            goTop.style.display = 'block';
+        } else {
+            goTop.style.display = 'none';
+        }
+    });
+    
+    goTop.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+</script>
+
+</body>
+</html>
