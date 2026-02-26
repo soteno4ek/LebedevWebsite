@@ -602,10 +602,24 @@
 
     const factDisplay = document.getElementById('fact-display');
     const randomBtn = document.getElementById('randomFactBtn');
+    
+    let remainingFacts = [];
+
+    function getUniqueFact() {
+        if (remainingFacts.length === 0) {
+            remainingFacts = [...facts];
+        }
+        
+        const randomIndex = Math.floor(Math.random() * remainingFacts.length);
+        const fact = remainingFacts[randomIndex];
+        remainingFacts.splice(randomIndex, 1);
+        
+        return fact;
+    }
 
     function showRandomFact() {
-        const randomIndex = Math.floor(Math.random() * facts.length);
-        factDisplay.textContent = facts[randomIndex];
+        const fact = getUniqueFact();
+        factDisplay.textContent = '🔹 ' + fact;
     }
 
     randomBtn.addEventListener('click', showRandomFact);
