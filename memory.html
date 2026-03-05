@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Сергей Алексеевич Лебедев | Память</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧠</text></svg>">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+        }
+
+        body {
+            background: #f0f4f8;
+            color: #1e2b3a;
+            line-height: 1.6;
+            transition: background 0.3s, color 0.3s;
+        }
+
+        body.dark-theme {
+            background: #1a1a2e;
+            color: #e0e0e0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        #progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 5px;
+            background: #ffb347;
+            width: 0%;
+            z-index: 1000;
+            transition: width 0.1s;
+        }
+
+        .main-nav {
+            background: #0b2545;
+            padding: 15px;
+            text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 999;
+            border-bottom: 3px solid #ffb347;
+        }
+
+        body.dark-theme .main-nav {
+            background: #1a1a2e;
+        }
+
+        .main-nav a {
+            color: white;
+            text-decoration: none;
+            margin: 0 20px;
+            font-weight: 500;
+            font-size: 1.1rem;
+            transition: color 0.3s;
+        }
+
+        .main-nav a:hover {
+            color: #ffb347;
+        }
+
+        #theme-toggle {
+            position: fixed;
+            top: 70px;
+            right: 20px;
+            background: white;
+            color: #0b2545;
+            border: none;
+            border-radius: 30px;
+            padding: 8px 20px;
+            cursor: pointer;
+            font-weight: bold;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            transition: background 0.3s, color 0.3s, transform 0.2s;
+            z-index: 1001;
+        }
+
+        body.dark-theme #theme-toggle {
+            background: #2a2a3e;
+            color: #ffb347;
+        }
+
+        #theme-toggle:hover {
+            transform: scale(1.05);
+        }
+
+        .page-header {
+            background: linear-gradient(145deg, #0b2545, #1b3b5c);
+            color: white;
+            padding: 60px 0 40px;
+            text-align: center;
+            border-bottom: 5px solid #ffb347;
+        }
+
+        .page-header h1 {
+            font-size: 3.2rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .page-header .subhead {
+            font-size: 1.4rem;
+            opacity: 0.9;
+        }
+
+        .section-title {
+            font-size: 2.4rem;
+            font-weight: 600;
+            color: #0b2545;
+            text-align: center;
+            margin: 60px 0 40px;
+            position: relative;
+        }
+
+        body.dark-theme .section-title {
+            color: #ffb347;
+        }
+
+        .section-title:after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 4px;
+            background: #ffb347;
+            margin: 12px auto 0;
+            border-radius: 2px;
+        }
+
+        .memory-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin: 40px 0;
+        }
+
+        .memory-card {
+            background: white;
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+
+        body.dark-theme .memory-card {
+            background: #2a2a3e;
+        }
+
+        .memory-card:hover {
+            transform: translateY(-8px);
+        }
+
+        .memory-header {
+            background: #ffb347;
+            color: #0b2545;
+            padding: 20px;
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .memory-content {
+            padding: 25px;
+        }
+
+        .memory-content p {
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+        }
+
+        .memory-content ul {
+            list-style: none;
+        }
+
+        .memory-content li {
+            margin-bottom: 12px;
+            padding-left: 25px;
+            position: relative;
+        }
+
+        .memory-content li:before {
+            content: "✓";
+            color: #ffb347;
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+        }
+
+        .award-block {
+            background: white;
+            border-radius: 40px;
+            padding: 40px;
+            margin: 40px 0;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+            border-left: 8px solid #ffb347;
+        }
+
+        body.dark-theme .award-block {
+            background: #2a2a3e;
+        }
+
+        .award-block h3 {
+            font-size: 1.8rem;
+            color: #ffb347;
+            margin-bottom: 20px;
+        }
+
+        .award-block p {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+        }
+
+        footer {
+            background: #0b2545;
+            color: white;
+            text-align: center;
+            padding: 30px 0;
+            border-radius: 40px 40px 0 0;
+            margin-top: 80px;
+        }
+
+        #go-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: #ffb347;
+            border: none;
+            border-radius: 50px;
+            padding: 15px 25px;
+            cursor: pointer;
+            font-weight: bold;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            display: none;
+            z-index: 999;
+            transition: transform 0.2s;
+        }
+
+        #go-top:hover {
+            transform: translateY(-3px);
+        }
+
+        @media (max-width: 700px) {
+            .page-header h1 { font-size: 2.4rem; }
+            .main-nav a { margin: 0 10px; font-size: 0.9rem; }
+            #theme-toggle { top: 10px; right: 10px; }
+        }
+    </style>
+</head>
+<body>
+
+<div id="progress-bar"></div>
+
+<nav class="main-nav">
+    <a href="index.html">Главная</a>
+    <a href="bio.html">Биография</a>
+    <a href="achievements.html">Достижения</a>
+    <a href="memories.html">Воспоминания</a>
+    <a href="memory.html">Память</a>
+    <a href="gallery.html">Галерея</a>
+</nav>
+
+<button id="theme-toggle">🌙 Тёмная тема</button>
+
+<div class="page-header">
+    <div class="container">
+        <h1>Память</h1>
+        <div class="subhead">Увековечение имени Сергея Алексеевича Лебедева</div>
+    </div>
+</div>
+
+<div class="container">
+
+    <div class="award-block">
+        <h3>🏅 Медаль «Computer Pioneer»</h3>
+        <p>В 1996 году (посмертно) IEEE Computer Society наградил Сергея Алексеевича Лебедева медалью Computer Pioneer — «за выдающиеся новаторские работы в области создания вычислительной техники». На медали выгравировано: «Разработчик первых вычислительных машин в Советском Союзе и основатель советской компьютерной индустрии».</p>
+    </div>
+
+    <div class="memory-grid">
+        
+        <div class="memory-card">
+            <div class="memory-header">🏛️ Имя на карте</div>
+            <div class="memory-content">
+                <ul>
+                    <li>Улица в Москве (район Южное Бутово)</li>
+                    <li>Улица в Киеве (жилой массив Теремки-II)</li>
+                    <li>Улица в Нижнем Новгороде</li>
+                    <li>Улица в Санкт-Петербурге</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="memory-card">
+            <div class="memory-header">📚 Премия имени Лебедева</div>
+            <div class="memory-content">
+                <p>Российская академия наук ежегодно вручает премию имени С.А. Лебедева за выдающиеся работы в области вычислительных систем. Премия присуждается учёным за фундаментальные и прикладные исследования в этой области.</p>
+            </div>
+        </div>
+
+        <div class="memory-card">
+            <div class="memory-header">🏫 Институт</div>
+            <div class="memory-content">
+                <p>Институт точной механики и вычислительной техники (ИТМиВТ) РАН, бессменным директором которого Сергей Алексеевич был почти четверть века (1953–1973), носит его имя. В здании института размещён мозаичный портрет учёного.</p>
+            </div>
+        </div>
+
+        <div class="memory-card">
+            <div class="memory-header">📜 Мемориальные доски</div>
+            <div class="memory-content">
+                <ul>
+                    <li>Москва, Новопесчаная ул., д. 21, корп. 1 (дом, где жил Лебедев с 1952 по 1974 год)</li>
+                    <li>Киев, ул. Костёльная, 15 (академический дом, где жила семья в 1946–1952 годах)</li>
+                    <li>Нижний Новгород, ул. Студёная, 22 (дом, где прошло детство)</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="memory-card">
+            <div class="memory-header">🗿 Памятник в Киеве</div>
+            <div class="memory-content">
+                <p>В 2002 году, к 100-летию со дня рождения, в кампусе Киевского политехнического института имени Игоря Сикорского открыт памятник (скульптор А.П. Скобликов). Бронзовая полуфигура учёного на постаменте из красного полированного гранита. На постаменте высечены слова Лебедева: «Электронно-вычислительная техника будет иметь не меньшее, если не большее значение, чем любые другие технологии».</p>
+            </div>
+        </div>
+
+        <div class="memory-card">
+            <div class="memory-header">🎓 Память в МГТУ им. Баумана</div>
+            <div class="memory-content">
+                <p>Сергей Алексеевич Лебедев — выпускник МВТУ им. Баумана (1928). Его имя увековечено в Галерее выдающихся выпускников. В университете проводятся Лебедевские чтения.</p>
+            </div>
+        </div>
+
+        <div class="memory-card">
+            <div class="memory-header">📬 Почтовые выпуски</div>
+            <div class="memory-content">
+                <p>Выпущены художественные маркированные конверты и открытки с портретом С.А. Лебедева, посвящённые его юбилеям.</p>
+            </div>
+        </div>
+
+        <div class="memory-card">
+            <div class="memory-header">📺 Документальные фильмы</div>
+            <div class="memory-content">
+                <p>8 ноября 2007 года на канале «Культура» вышла передача, посвящённая академику С.А. Лебедеву. В 2017 году в Президиуме РАН прошла конференция к 50-летию БЭСМ-6.</p>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="award-block">
+        <h3>🏅 Государственные награды</h3>
+        <p>Герой Социалистического Труда (1956). Лауреат Ленинской (1966) и Государственных (1950, 1969) премий СССР. Награждён четырьмя орденами Ленина, орденами Трудового Красного Знамени, Октябрьской Революции, медалями.</p>
+    </div>
+
+    <div class="award-block">
+        <h3>📖 Цитата из выступления Б.Е. Патона</h3>
+        <p>«Мы всегда будем гордиться тем, что именно в Академии наук Украины, в нашем родном Киеве, расцвел талант С.А. Лебедева как выдающегося ученого в области вычислительной техники и математики, а также крупнейших автоматизированных систем. Вся жизнь выдающегося ученого — это героический пример служения науке, своему народу».</p>
+        <p style="text-align: right; margin-top: 20px;">— Б.Е. Патон, президент Национальной академии наук Украины</p>
+    </div>
+
+</div>
+
+<footer>
+    <p>Проект по истории России</p>
+    <p>Выполнили: Трубицин Тимофей и Ибраев Кирилл | Группа: ИТ-12, ИТ-11</p>
+    <p>Пермь, 2026</p>
+</footer>
+
+<button id="go-top">↑ Наверх</button>
+
+<script>
+    if (localStorage.getItem('theme') === 'dark') {
+        document.body.classList.add('dark-theme');
+    }
+
+    window.addEventListener('scroll', () => {
+        const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+        const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+        const scrolled = (winScroll / height) * 100;
+        document.getElementById('progress-bar').style.width = scrolled + '%';
+    });
+
+    const themeToggle = document.getElementById('theme-toggle');
+    let isDark = localStorage.getItem('theme') === 'dark';
+
+    if (isDark) {
+        themeToggle.textContent = '☀️ Светлая тема';
+    } else {
+        themeToggle.textContent = '🌙 Тёмная тема';
+    }
+
+    themeToggle.addEventListener('click', () => {
+        if (!isDark) {
+            document.body.classList.add('dark-theme');
+            themeToggle.textContent = '☀️ Светлая тема';
+            localStorage.setItem('theme', 'dark');
+        } else {
+            document.body.classList.remove('dark-theme');
+            themeToggle.textContent = '🌙 Тёмная тема';
+            localStorage.setItem('theme', 'light');
+        }
+        isDark = !isDark;
+    });
+
+    const goTop = document.getElementById('go-top');
+    
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 500) {
+            goTop.style.display = 'block';
+        } else {
+            goTop.style.display = 'none';
+        }
+    });
+    
+    goTop.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+</script>
+
+</body>
+</html>

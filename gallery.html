@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Сергей Алексеевич Лебедев | Галерея</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧠</text></svg>">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+        }
+
+        body {
+            background: #f0f4f8;
+            color: #1e2b3a;
+            line-height: 1.6;
+            transition: background 0.3s, color 0.3s;
+        }
+
+        body.dark-theme {
+            background: #1a1a2e;
+            color: #e0e0e0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        #progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 5px;
+            background: #ffb347;
+            width: 0%;
+            z-index: 1000;
+            transition: width 0.1s;
+        }
+
+        .main-nav {
+            background: #0b2545;
+            padding: 15px;
+            text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 999;
+            border-bottom: 3px solid #ffb347;
+        }
+
+        body.dark-theme .main-nav {
+            background: #1a1a2e;
+        }
+
+        .main-nav a {
+            color: white;
+            text-decoration: none;
+            margin: 0 20px;
+            font-weight: 500;
+            font-size: 1.1rem;
+            transition: color 0.3s;
+        }
+
+        .main-nav a:hover {
+            color: #ffb347;
+        }
+
+        #theme-toggle {
+            position: fixed;
+            top: 70px;
+            right: 20px;
+            background: white;
+            color: #0b2545;
+            border: none;
+            border-radius: 30px;
+            padding: 8px 20px;
+            cursor: pointer;
+            font-weight: bold;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            transition: background 0.3s, color 0.3s, transform 0.2s;
+            z-index: 1001;
+        }
+
+        body.dark-theme #theme-toggle {
+            background: #2a2a3e;
+            color: #ffb347;
+        }
+
+        #theme-toggle:hover {
+            transform: scale(1.05);
+        }
+
+        .page-header {
+            background: linear-gradient(145deg, #0b2545, #1b3b5c);
+            color: white;
+            padding: 60px 0 40px;
+            text-align: center;
+            border-bottom: 5px solid #ffb347;
+        }
+
+        .page-header h1 {
+            font-size: 3.2rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .page-header .subhead {
+            font-size: 1.4rem;
+            opacity: 0.9;
+        }
+
+        .section-title {
+            font-size: 2.4rem;
+            font-weight: 600;
+            color: #0b2545;
+            text-align: center;
+            margin: 60px 0 40px;
+            position: relative;
+        }
+
+        body.dark-theme .section-title {
+            color: #ffb347;
+        }
+
+        .section-title:after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 4px;
+            background: #ffb347;
+            margin: 12px auto 0;
+            border-radius: 2px;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+            margin: 40px 0;
+        }
+
+        .gallery-item {
+            background: white;
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+            cursor: pointer;
+        }
+
+        body.dark-theme .gallery-item {
+            background: #2a2a3e;
+        }
+
+        .gallery-item:hover {
+            transform: scale(1.03);
+        }
+
+        .gallery-img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            border-bottom: 3px solid #ffb347;
+        }
+
+        .gallery-caption {
+            padding: 15px;
+            text-align: center;
+            font-weight: 500;
+        }
+
+        .lightbox {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            cursor: zoom-out;
+        }
+
+        .lightbox.active {
+            display: flex;
+        }
+
+        .lightbox img {
+            max-width: 90%;
+            max-height: 90%;
+            object-fit: contain;
+            border: 3px solid #ffb347;
+            border-radius: 10px;
+            box-shadow: 0 0 30px rgba(255, 180, 71, 0.3);
+            cursor: zoom-in;
+            transition: transform 0.3s;
+        }
+
+        .lightbox img.zoomed {
+            transform: scale(1.5);
+            cursor: zoom-out;
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            color: white;
+            font-size: 40px;
+            font-weight: bold;
+            cursor: pointer;
+            z-index: 2001;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0,0,0,0.5);
+            border-radius: 50%;
+            transition: 0.3s;
+        }
+
+        .lightbox-close:hover {
+            background: #ffb347;
+            color: #0b2545;
+        }
+
+        footer {
+            background: #0b2545;
+            color: white;
+            text-align: center;
+            padding: 30px 0;
+            border-radius: 40px 40px 0 0;
+            margin-top: 80px;
+        }
+
+        #go-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: #ffb347;
+            border: none;
+            border-radius: 50px;
+            padding: 15px 25px;
+            cursor: pointer;
+            font-weight: bold;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            display: none;
+            z-index: 999;
+            transition: transform 0.2s;
+        }
+
+        #go-top:hover {
+            transform: translateY(-3px);
+        }
+
+        @media (max-width: 700px) {
+            .page-header h1 { font-size: 2.4rem; }
+            .main-nav a { margin: 0 10px; font-size: 0.9rem; }
+            #theme-toggle { top: 10px; right: 10px; }
+        }
+    </style>
+</head>
+<body>
+
+<div id="progress-bar"></div>
+
+<nav class="main-nav">
+    <a href="index.html">Главная</a>
+    <a href="bio.html">Биография</a>
+    <a href="achievements.html">Достижения</a>
+    <a href="memories.html">Воспоминания</a>
+    <a href="memory.html">Память</a>
+    <a href="gallery.html">Галерея</a>
+</nav>
+
+<button id="theme-toggle">🌙 Тёмная тема</button>
+
+<div class="page-header">
+    <div class="container">
+        <h1>Фотогалерея</h1>
+        <div class="subhead">Сергей Алексеевич Лебедев в жизни и работе</div>
+    </div>
+</div>
+
+<div class="container">
+
+    <h2 class="section-title">Детство и юность</h2>
+    <div class="gallery-grid">
+        <div class="gallery-item">
+            <img class="gallery-img" src="https://museum.mipt.ru/wp-content/uploads/2016/08/-%D1%81%D0%B5%D1%80%D0%B3%D0%B5%D0%B9-%D0%B0%D0%BB%D0%B5%D0%BA%D1%81%D0%B5%D0%B5%D0%B2%D0%B8%D1%87-e1472194865119.jpg" alt="С.А. Лебедев">
+            <div class="gallery-caption">Сергей Алексеевич Лебедев, 1920-е годы</div>
+        </div>
+        <div class="gallery-item">
+            <img class="gallery-img" src="https://cs9.pikabu.ru/post_img/big/2017/06/12/9/1497280591181528960.jpg" alt="Родители Лебедева">
+            <div class="gallery-caption">Отец Алексей Иванович и мать Анастасия Петровна</div>
+        </div>
+    </div>
+
+    <h2 class="section-title">Семья</h2>
+    <div class="gallery-grid">
+        <div class="gallery-item">
+            <img class="gallery-img" src="https://www.computer-museum.ru/images/galglory/lebedev4.jpg" alt="С.А. Лебедев с женой">
+            <div class="gallery-caption">Сергей Алексеевич с женой Алисой Григорьевной</div>
+        </div>
+        <div class="gallery-item">
+            <img class="gallery-img" src="https://www.computer-museum.ru/images/books/vt_Lebedev_semia.jpg" alt="Семья Лебедевых">
+            <div class="gallery-caption">Семья Лебедевых (слева направо): сын Сергей, жена Алиса, приёмный сын Яков, Сергей Алексеевич, дочери Наталья и Екатерина</div>
+        </div>
+    </div>
+
+    <h2 class="section-title">Коллеги и друзья</h2>
+    <div class="gallery-grid">
+        <div class="gallery-item">
+            <img class="gallery-img" src="https://upload.wikimedia.org/wikipedia/ru/thumb/d/d1/Lavren.jpg/250px-Lavren.jpg" alt="М.А. Лаврентьев">
+            <div class="gallery-caption">Михаил Алексеевич Лаврентьев, друг и соратник</div>
+        </div>
+    </div>
+
+    <h2 class="section-title">Награды и документы</h2>
+    <div class="gallery-grid">
+        <div class="gallery-item">
+            <img class="gallery-img" src="https://cs8.pikabu.ru/post_img/big/2017/06/12/9/1497280471157297914.jpg" alt="Медаль Computer Pioneer">
+            <div class="gallery-caption">Медаль «Computer Pioneer» (IEEE, 1996)</div>
+        </div>
+        <div class="gallery-item">
+            <img class="gallery-img" src="https://upload.wikimedia.org/wikipedia/commons/c/c9/LebedevSA.png" alt="Подпись Лебедева">
+            <div class="gallery-caption">Автограф С.А. Лебедева</div>
+        </div>
+    </div>
+
+    <h2 class="section-title">Созданные ЭВМ</h2>
+    <div class="gallery-grid">
+        <div class="gallery-item">
+            <img class="gallery-img" src="https://upload.wikimedia.org/wikipedia/ru/1/1e/MESM.jpg" alt="МЭСМ">
+            <div class="gallery-caption">МЭСМ — первая ЭВМ в континентальной Европе</div>
+        </div>
+        <div class="gallery-item">
+            <img class="gallery-img" src="https://www.computer-museum.ru/images/histussr/becm2020_1.jpg" alt="БЭСМ">
+            <div class="gallery-caption">БЭСМ — лучшая ЭВМ Европы (1956)</div>
+        </div>
+        <div class="gallery-item">
+            <img class="gallery-img" src="https://besm-6.ru/assets/vgWQhT.jpg" alt="Пульт БЭСМ">
+            <div class="gallery-caption">Пульт управления БЭСМ</div>
+        </div>
+        <div class="gallery-item">
+            <img class="gallery-img" src="https://filearchive.cnews.ru/img/files/2017/06/15/mesm.png" alt="МЭСМ">
+            <div class="gallery-caption">МЭСМ, другой ракурс</div>
+        </div>
+        <div class="gallery-item">
+            <img class="gallery-img" src="https://filearchive.cnews.ru/img/files/2017/06/15/strela3.png" alt="Стрела">
+            <div class="gallery-caption">ЭВМ «Стрела»</div>
+        </div>
+        <div class="gallery-item">
+            <img class="gallery-img" src="https://cdn.ruwiki.ru/ruwiki/files/thumb/d/d0/%D0%91%D0%AD%D0%A1%D0%9C-1.png/600px-%D0%91%D0%AD%D0%A1%D0%9C-1.png" alt="БЭСМ-1">
+            <div class="gallery-caption">БЭСМ-1</div>
+        </div>
+    </div>
+
+</div>
+
+<footer>
+    <p>Проект по истории России</p>
+    <p>Выполнили: Трубицин Тимофей и Ибраев Кирилл | Группа: ИТ-12, ИТ-11</p>
+    <p>Пермь, 2026</p>
+</footer>
+
+<button id="go-top">↑ Наверх</button>
+
+<div class="lightbox" id="lightbox">
+    <span class="lightbox-close" id="lightbox-close">&times;</span>
+    <img id="lightbox-img" src="" alt="">
+</div>
+
+<script>
+    if (localStorage.getItem('theme') === 'dark') {
+        document.body.classList.add('dark-theme');
+    }
+
+    window.addEventListener('scroll', () => {
+        const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+        const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+        const scrolled = (winScroll / height) * 100;
+        document.getElementById('progress-bar').style.width = scrolled + '%';
+    });
+
+    const themeToggle = document.getElementById('theme-toggle');
+    let isDark = localStorage.getItem('theme') === 'dark';
+
+    if (isDark) {
+        themeToggle.textContent = '☀️ Светлая тема';
+    } else {
+        themeToggle.textContent = '🌙 Тёмная тема';
+    }
+
+    themeToggle.addEventListener('click', () => {
+        if (!isDark) {
+            document.body.classList.add('dark-theme');
+            themeToggle.textContent = '☀️ Светлая тема';
+            localStorage.setItem('theme', 'dark');
+        } else {
+            document.body.classList.remove('dark-theme');
+            themeToggle.textContent = '🌙 Тёмная тема';
+            localStorage.setItem('theme', 'light');
+        }
+        isDark = !isDark;
+    });
+
+    const goTop = document.getElementById('go-top');
+    
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 500) {
+            goTop.style.display = 'block';
+        } else {
+            goTop.style.display = 'none';
+        }
+    });
+    
+    goTop.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightbox-img');
+    const lightboxClose = document.getElementById('lightbox-close');
+    
+    document.querySelectorAll('.gallery-img').forEach(img => {
+        img.addEventListener('click', () => {
+            lightbox.classList.add('active');
+            lightboxImg.src = img.src;
+            lightboxImg.classList.remove('zoomed');
+        });
+    });
+    
+    lightboxImg.addEventListener('click', (e) => {
+        e.stopPropagation();
+        lightboxImg.classList.toggle('zoomed');
+    });
+    
+    lightbox.addEventListener('click', (e) => {
+        if (e.target === lightbox || e.target === lightboxClose) {
+            lightbox.classList.remove('active');
+            lightboxImg.classList.remove('zoomed');
+        }
+    });
+</script>
+
+</body>
+</html>

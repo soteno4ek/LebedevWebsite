@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Сергей Алексеевич Лебедев | Воспоминания</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧠</text></svg>">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+        }
+
+        body {
+            background: #f0f4f8;
+            color: #1e2b3a;
+            line-height: 1.6;
+            transition: background 0.3s, color 0.3s;
+        }
+
+        body.dark-theme {
+            background: #1a1a2e;
+            color: #e0e0e0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        #progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 5px;
+            background: #ffb347;
+            width: 0%;
+            z-index: 1000;
+            transition: width 0.1s;
+        }
+
+        .main-nav {
+            background: #0b2545;
+            padding: 15px;
+            text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 999;
+            border-bottom: 3px solid #ffb347;
+        }
+
+        body.dark-theme .main-nav {
+            background: #1a1a2e;
+        }
+
+        .main-nav a {
+            color: white;
+            text-decoration: none;
+            margin: 0 20px;
+            font-weight: 500;
+            font-size: 1.1rem;
+            transition: color 0.3s;
+        }
+
+        .main-nav a:hover {
+            color: #ffb347;
+        }
+
+        #theme-toggle {
+            position: fixed;
+            top: 70px;
+            right: 20px;
+            background: white;
+            color: #0b2545;
+            border: none;
+            border-radius: 30px;
+            padding: 8px 20px;
+            cursor: pointer;
+            font-weight: bold;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            transition: background 0.3s, color 0.3s, transform 0.2s;
+            z-index: 1001;
+        }
+
+        body.dark-theme #theme-toggle {
+            background: #2a2a3e;
+            color: #ffb347;
+        }
+
+        #theme-toggle:hover {
+            transform: scale(1.05);
+        }
+
+        .page-header {
+            background: linear-gradient(145deg, #0b2545, #1b3b5c);
+            color: white;
+            padding: 60px 0 40px;
+            text-align: center;
+            border-bottom: 5px solid #ffb347;
+        }
+
+        .page-header h1 {
+            font-size: 3.2rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .page-header .subhead {
+            font-size: 1.4rem;
+            opacity: 0.9;
+        }
+
+        .section-title {
+            font-size: 2.4rem;
+            font-weight: 600;
+            color: #0b2545;
+            text-align: center;
+            margin: 60px 0 40px;
+            position: relative;
+        }
+
+        body.dark-theme .section-title {
+            color: #ffb347;
+        }
+
+        .section-title:after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 4px;
+            background: #ffb347;
+            margin: 12px auto 0;
+            border-radius: 2px;
+        }
+
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin: 40px 0;
+        }
+
+        .testimonial-card {
+            background: white;
+            border-radius: 30px;
+            padding: 30px;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+            position: relative;
+            border-bottom: 5px solid #ffb347;
+        }
+
+        body.dark-theme .testimonial-card {
+            background: #2a2a3e;
+        }
+
+        .testimonial-card:before {
+            content: '"';
+            font-size: 5rem;
+            color: #ffb347;
+            opacity: 0.2;
+            position: absolute;
+            top: 10px;
+            left: 20px;
+            font-family: serif;
+        }
+
+        .testimonial-text {
+            font-size: 1.2rem;
+            font-style: italic;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 1;
+            line-height: 1.7;
+        }
+
+        .testimonial-author {
+            font-weight: bold;
+            color: #0b2545;
+            text-align: right;
+            font-size: 1.1rem;
+        }
+
+        body.dark-theme .testimonial-author {
+            color: #ffb347;
+        }
+
+        .testimonial-role {
+            font-size: 0.95rem;
+            color: #666;
+            text-align: right;
+        }
+
+        body.dark-theme .testimonial-role {
+            color: #b0b0b0;
+        }
+
+        footer {
+            background: #0b2545;
+            color: white;
+            text-align: center;
+            padding: 30px 0;
+            border-radius: 40px 40px 0 0;
+            margin-top: 80px;
+        }
+
+        #go-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: #ffb347;
+            border: none;
+            border-radius: 50px;
+            padding: 15px 25px;
+            cursor: pointer;
+            font-weight: bold;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            display: none;
+            z-index: 999;
+            transition: transform 0.2s;
+        }
+
+        #go-top:hover {
+            transform: translateY(-3px);
+        }
+
+        @media (max-width: 700px) {
+            .page-header h1 { font-size: 2.4rem; }
+            .main-nav a { margin: 0 10px; font-size: 0.9rem; }
+            #theme-toggle { top: 10px; right: 10px; }
+        }
+    </style>
+</head>
+<body>
+
+<div id="progress-bar"></div>
+
+<nav class="main-nav">
+    <a href="index.html">Главная</a>
+    <a href="bio.html">Биография</a>
+    <a href="achievements.html">Достижения</a>
+    <a href="memories.html">Воспоминания</a>
+    <a href="memory.html">Память</a>
+    <a href="gallery.html">Галерея</a>
+</nav>
+
+<button id="theme-toggle">🌙 Тёмная тема</button>
+
+<div class="page-header">
+    <div class="container">
+        <h1>О нём говорили</h1>
+        <div class="subhead">Воспоминания коллег, учеников и близких</div>
+    </div>
+</div>
+
+<div class="container">
+
+    <div class="testimonials-grid">
+        
+        <div class="testimonial-card">
+            <div class="testimonial-text">Сергей Алексеевич был невысокого роста, щуплый и не очень-то ловкий, но всё это компенсировалось азартом. Он обожал волейбол.</div>
+            <div class="testimonial-author">С.Б. Погребинский</div>
+            <div class="testimonial-role">участник создания МЭСМ</div>
+        </div>
+
+        <div class="testimonial-card">
+            <div class="testimonial-text">В зловещем 1937 году Сергей Алексеевич не колеблясь пригласил в свой отдел человека, чей отец был армянским священником. В те страшные годы в его отделе сотрудники чувствовали себя уверенно и спокойно.</div>
+            <div class="testimonial-author">Д.В. Свечарник</div>
+            <div class="testimonial-role">коллега по ВЭИ</div>
+        </div>
+
+        <div class="testimonial-card">
+            <div class="testimonial-text">Стиль жизни отца, его невероятная трудоспособность, скромность, бескорыстие и честность оказывали глубочайшее воздействие на детей.</div>
+            <div class="testimonial-author">Екатерина Лебедева</div>
+            <div class="testimonial-role">дочь</div>
+        </div>
+
+        <div class="testimonial-card">
+            <div class="testimonial-text">Он не любил благополучных отличников. Предпочитал людей, обладающих широкой инженерной эрудицией.</div>
+            <div class="testimonial-author">О.М. Белоцерковский</div>
+            <div class="testimonial-role">ректор МФТИ</div>
+        </div>
+
+        <div class="testimonial-card">
+            <div class="testimonial-text">Я пережил с мамкой всю гамму чувств, но единственное, чего я с ней не знал, так это скуки.</div>
+            <div class="testimonial-author">С.А. Лебедев</div>
+            <div class="testimonial-role">о своей жене Алисе</div>
+        </div>
+
+        <div class="testimonial-card">
+            <div class="testimonial-text">Гениальность Лебедева в том, что он ставил цель, предвидя перспективы развития структуры будущей машины, умел правильно выбирать средства на ее реализацию, учитывая возможности отечественной электронной промышленности.</div>
+            <div class="testimonial-author">В.А. Мельников</div>
+            <div class="testimonial-role">академик, ученик Лебедева</div>
+        </div>
+
+        <div class="testimonial-card">
+            <div class="testimonial-text">Мы всегда будем гордиться тем, что именно в Академии наук Украины, в нашем родном Киеве, расцвел талант С.А. Лебедева как выдающегося ученого в области вычислительной техники и математики, а также крупнейших автоматизированных систем.</div>
+            <div class="testimonial-author">Б.Е. Патон</div>
+            <div class="testimonial-role">президент Национальной академии наук Украины</div>
+        </div>
+
+        <div class="testimonial-card">
+            <div class="testimonial-text">... Система воспитания детей была на фольклоре, да еще обучали музыке в интеллигентных семьях и языкам, французскому и немецкому, да еще правилам поведения в жизни... Много чтения, много мыслей, много всего кругом...</div>
+            <div class="testimonial-author">Татьяна Маврина (Лебедева)</div>
+            <div class="testimonial-role">сестра, художница</div>
+        </div>
+
+        <div class="testimonial-card">
+            <div class="testimonial-text">Каждый, кому посчастливилось работать с С.А. Лебедевым, скажет о его внутренней скромности, никак не рассчитанной на эффект. Многие поругивали его за то, что он не умел представить «товар лицом». Он всегда первый во всеуслышание указывал на недостатки и ограничения проектов собственной разработки и не очень громко говорил об их достоинствах.</div>
+            <div class="testimonial-author">Л.Н. Королёв</div>
+            <div class="testimonial-role">член-корреспондент АН СССР</div>
+        </div>
+
+        <div class="testimonial-card">
+            <div class="testimonial-text">Сергей Алексеевич с женой, её матерью и родившимся в 1935 году сыном Сергеем жили тогда на Красноказарменной улице в одном из корпусов, построенных для сотрудников ВЭИ, где его семья по 1946 год занимала две небольшие комнаты (в третьей жили соседи).</div>
+            <div class="testimonial-author">Из воспоминаний</div>
+            <div class="testimonial-role">о жизни в 1930-е</div>
+        </div>
+
+        <div class="testimonial-card">
+            <div class="testimonial-text">Совместная работа вскоре переросла в дружбу. Летом мы с ним уезжали в дальние путешествия - преимущественно в горы. Пошли как-то на Эльбрус. Последние 50 метров на подходе к седловине я буквально прополз. Сергей Алексеевич довольно бодро шагал... Рискованно прыгал с камня на камень, и проводник, глядя на него, цокал языком и приговаривал: «Ай, ай, такой старый и такой смелый!» («старому» тогда было лет 35).</div>
+            <div class="testimonial-author">Д.В. Свечарник</div>
+            <div class="testimonial-role">о восхождении на Эльбрус</div>
+        </div>
+
+        <div class="testimonial-card">
+            <div class="testimonial-text">После войны выделились три важных области, каждая из которых стала знаменем научно-технической революции. По каждому из этих направлений выдвинулись крупные ученые-организаторы. Их имена теперь известны всем. Курчатов возглавил ядерную программу, академик Королев — ракетно-космическую, академик Лебедев стал генеральным конструктором первых вычислительных машин.</div>
+            <div class="testimonial-author">М.А. Лаврентьев</div>
+            <div class="testimonial-role">академик, председатель СО АН СССР</div>
+        </div>
+
+    </div>
+
+</div>
+
+<footer>
+    <p>Проект по истории России</p>
+    <p>Выполнили: Трубицин Тимофей и Ибраев Кирилл | Группа: ИТ-12, ИТ-11</p>
+    <p>Пермь, 2026</p>
+</footer>
+
+<button id="go-top">↑ Наверх</button>
+
+<script>
+    if (localStorage.getItem('theme') === 'dark') {
+        document.body.classList.add('dark-theme');
+    }
+
+    window.addEventListener('scroll', () => {
+        const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+        const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+        const scrolled = (winScroll / height) * 100;
+        document.getElementById('progress-bar').style.width = scrolled + '%';
+    });
+
+    const themeToggle = document.getElementById('theme-toggle');
+    let isDark = localStorage.getItem('theme') === 'dark';
+
+    if (isDark) {
+        themeToggle.textContent = '☀️ Светлая тема';
+    } else {
+        themeToggle.textContent = '🌙 Тёмная тема';
+    }
+
+    themeToggle.addEventListener('click', () => {
+        if (!isDark) {
+            document.body.classList.add('dark-theme');
+            themeToggle.textContent = '☀️ Светлая тема';
+            localStorage.setItem('theme', 'dark');
+        } else {
+            document.body.classList.remove('dark-theme');
+            themeToggle.textContent = '🌙 Тёмная тема';
+            localStorage.setItem('theme', 'light');
+        }
+        isDark = !isDark;
+    });
+
+    const goTop = document.getElementById('go-top');
+    
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 500) {
+            goTop.style.display = 'block';
+        } else {
+            goTop.style.display = 'none';
+        }
+    });
+    
+    goTop.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+</script>
+
+</body>
+</html>

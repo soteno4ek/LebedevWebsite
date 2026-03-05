@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Сергей Алексеевич Лебедев | Биография</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧠</text></svg>">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+        }
+
+        body {
+            background: #f0f4f8;
+            color: #1e2b3a;
+            line-height: 1.6;
+            transition: background 0.3s, color 0.3s;
+        }
+
+        body.dark-theme {
+            background: #1a1a2e;
+            color: #e0e0e0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        #progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 5px;
+            background: #ffb347;
+            width: 0%;
+            z-index: 1000;
+            transition: width 0.1s;
+        }
+
+        .main-nav {
+            background: #0b2545;
+            padding: 15px;
+            text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 999;
+            border-bottom: 3px solid #ffb347;
+        }
+
+        body.dark-theme .main-nav {
+            background: #1a1a2e;
+        }
+
+        .main-nav a {
+            color: white;
+            text-decoration: none;
+            margin: 0 20px;
+            font-weight: 500;
+            font-size: 1.1rem;
+            transition: color 0.3s;
+        }
+
+        .main-nav a:hover {
+            color: #ffb347;
+        }
+
+        #theme-toggle {
+            position: fixed;
+            top: 70px;
+            right: 20px;
+            background: white;
+            color: #0b2545;
+            border: none;
+            border-radius: 30px;
+            padding: 8px 20px;
+            cursor: pointer;
+            font-weight: bold;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            transition: background 0.3s, color 0.3s, transform 0.2s;
+            z-index: 1001;
+        }
+
+        body.dark-theme #theme-toggle {
+            background: #2a2a3e;
+            color: #ffb347;
+        }
+
+        #theme-toggle:hover {
+            transform: scale(1.05);
+        }
+
+        .page-header {
+            background: linear-gradient(145deg, #0b2545, #1b3b5c);
+            color: white;
+            padding: 60px 0 40px;
+            text-align: center;
+            border-bottom: 5px solid #ffb347;
+        }
+
+        .page-header h1 {
+            font-size: 3.2rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .page-header .subhead {
+            font-size: 1.4rem;
+            opacity: 0.9;
+        }
+
+        .section-title {
+            font-size: 2.4rem;
+            font-weight: 600;
+            color: #0b2545;
+            text-align: center;
+            margin: 60px 0 40px;
+            position: relative;
+        }
+
+        body.dark-theme .section-title {
+            color: #ffb347;
+        }
+
+        .section-title:after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 4px;
+            background: #ffb347;
+            margin: 12px auto 0;
+            border-radius: 2px;
+        }
+
+        .bio-block {
+            background: white;
+            border-radius: 40px;
+            padding: 40px;
+            margin: 30px 0;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+        }
+
+        body.dark-theme .bio-block {
+            background: #2a2a3e;
+        }
+
+        .bio-block h3 {
+            font-size: 1.8rem;
+            color: #ffb347;
+            margin-bottom: 25px;
+            border-left: 5px solid #ffb347;
+            padding-left: 20px;
+        }
+
+        .bio-block p {
+            font-size: 1.15rem;
+            margin-bottom: 20px;
+        }
+
+        .bio-block ul {
+            list-style: none;
+            padding-left: 20px;
+        }
+
+        .bio-block li {
+            margin-bottom: 10px;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .bio-block li:before {
+            content: "•";
+            color: #ffb347;
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+        }
+
+        footer {
+            background: #0b2545;
+            color: white;
+            text-align: center;
+            padding: 30px 0;
+            border-radius: 40px 40px 0 0;
+            margin-top: 80px;
+        }
+
+        #go-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: #ffb347;
+            border: none;
+            border-radius: 50px;
+            padding: 15px 25px;
+            cursor: pointer;
+            font-weight: bold;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            display: none;
+            z-index: 999;
+            transition: transform 0.2s;
+        }
+
+        #go-top:hover {
+            transform: translateY(-3px);
+        }
+
+        @media (max-width: 700px) {
+            .page-header h1 { font-size: 2.4rem; }
+            .main-nav a { margin: 0 10px; font-size: 0.9rem; }
+            #theme-toggle { top: 10px; right: 10px; }
+        }
+    </style>
+</head>
+<body>
+
+<div id="progress-bar"></div>
+
+<nav class="main-nav">
+    <a href="index.html">Главная</a>
+    <a href="bio.html">Биография</a>
+    <a href="achievements.html">Достижения</a>
+    <a href="memories.html">Воспоминания</a>
+    <a href="memory.html">Память</a>
+    <a href="gallery.html">Галерея</a>
+</nav>
+
+<button id="theme-toggle">🌙 Тёмная тема</button>
+
+<div class="page-header">
+    <div class="container">
+        <h1>Биография</h1>
+        <div class="subhead">Сергей Алексеевич Лебедев: жизнь и судьба</div>
+    </div>
+</div>
+
+<div class="container">
+
+    <div class="bio-block">
+        <h3>Детство и семья</h3>
+        <p>Сергей Алексеевич Лебедев родился 2 ноября 1902 года в Нижнем Новгороде. Его отец, Алексей Иванович Лебедев, был известным народовольцем, литератором и издателем. Мать, Анастасия Петровна Маврина, происходила из дворянского рода, была учительницей, директором училища имени Гациского для девочек из бедных семей.</p>
+        <p>Семья жила на улице Студёной, 22. Детство Сергея прошло в атмосфере любви к книгам, музыке и театру. Сёстры Сергея — Екатерина и Татьяна — стали художницами. Татьяна Маврина (псевдоним по материнской линии) стала всемирно известной художницей, единственной россиянкой, получившей премию имени Г.Х. Андерсена за иллюстрации к детским книгам.</p>
+        <p>Сергей увлекался конструированием: мастерил модель корабля «Фрам», динамо-машину, электрический звонок. Много читал, знал наизусть множество стихов, любил Блока, Гумилёва, зачитывался романами Дюма. Играл на фортепиано, предпочитая Бетховена и Грига.</p>
+    </div>
+
+    <div class="bio-block">
+        <h3>Годы учёбы</h3>
+        <p>В 1920 году семья переехала в Москву. Сергей сдал экстерном экзамены за среднюю школу и в 1921 году поступил на электротехнический факультет МВТУ им. Баумана. Его учителями были выдающиеся учёные: К.А. Круг (декан, создатель ВЭИ), Л.И. Сиротинский (основатель школы высоких напряжений), А.А. Глазунов.</p>
+        <p>Дипломный проект «Устойчивость параллельной работы электростанций» (1928) был настолько глубоким, что защита закончилась овацией, а Лебедева качали. Уже в 26 лет он стал самым компетентным в стране специалистом по теории надёжности в электротехнике.</p>
+    </div>
+
+    <div class="bio-block">
+        <h3>Личная жизнь</h3>
+        <p>В 1927 году Сергей встретил 16-летнюю студентку Института им. Гнесиных, виолончелистку Алису Григорьевну Штейнберг. В 1929 году они поженились и прожили вместе 45 лет. «Я пережил с мамкой всю гамму чувств, но единственное, чего я с ней не знал, так это скуки», — говорил он на серебряной свадьбе.</p>
+        <p>В семье было трое детей: Сергей (1935), будущий математик, и близнецы Катя и Наташа (1939) — пианистка и историк. В 1950 году Лебедевы усыновили 15-летнего Яшу Грунфельда, друга сына, потерявшего родителей.</p>
+        <p>Друзьями дома были Илья Ильф, Евгений Петров, Михаил Зощенко, Юрий Олеша, Валентин Катаев, Александр Фадеев, Святослав Рихтер, Махмуд Эсамбаев, Зиновий Гердт, Александр Галич.</p>
+    </div>
+
+    <div class="bio-block">
+        <h3>Учёный и человек</h3>
+        <p>Сергей Алексеевич отличался скромностью, трудоспособностью и принципиальностью. В зловещем 1937 году он без колебаний взял к себе в отдел А.Г. Иосифьяна, сына армянского священника, уволенного из-за происхождения. Рискуя собой, передавал посылки арестованному знакомому И.В. Корзун.</p>
+        <p>В свободное время играл в волейбол (азартно, но не очень ловко), ходил в горы, мастерил из дерева (на даче сам делал мебель). До зрелых лет посещал филармонические концерты.</p>
+    </div>
+
+    <div class="bio-block">
+        <h3>Эвакуация и война</h3>
+        <p>С началом войны Лебедев с семьёй эвакуировался в Свердловск. Жили в холоде и сырости, он носил за 12 км рюкзак с картошкой, возил торф, ходил на лесозаготовки (валил по 100 деревьев за смену двуручной пилой). Одновременно разрабатывал самонаводящиеся торпеды и систему стабилизации танкового орудия при прицеливании — она была принята на вооружение.</p>
+    </div>
+
+    <div class="bio-block">
+        <h3>Киевские годы</h3>
+        <p>В 1946 году по приглашению президента АН УССР А.А. Богомольца Лебедев переехал в Киев, возглавил Институт энергетики. Жил в академическом доме на ул. Костёльной, 15, по соседству с М.А. Лаврентьевым. Их дружба и сотрудничество определили судьбу советской вычислительной техники.</p>
+        <p>Именно в Киеве, в Феофании, в здании бывшего монастыря, была создана МЭСМ — первая ЭВМ в континентальной Европе.</p>
+    </div>
+
+    <div class="bio-block">
+        <h3>Последние годы</h3>
+        <p>Решение о копировании IBM-360 (программа ЕС ЭВМ) Лебедев воспринял как личную трагедию. Он считал, что надо идти своим путём. Узнав об окончательном решении, он, больной воспалением лёгких, поехал к министру, но его не приняли. Болезнь усилилась, с 1972 года он был прикован к постели. Скончался 3 июля 1974 года. Похоронен на Новодевичьем кладбище.</p>
+    </div>
+
+</div>
+
+<footer>
+    <p>Проект по истории России</p>
+    <p>Выполнили: Трубицин Тимофей и Ибраев Кирилл | Группа: ИТ-12, ИТ-11</p>
+    <p>Пермь, 2026</p>
+</footer>
+
+<button id="go-top">↑ Наверх</button>
+
+<script>
+    if (localStorage.getItem('theme') === 'dark') {
+        document.body.classList.add('dark-theme');
+    }
+
+    window.addEventListener('scroll', () => {
+        const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+        const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+        const scrolled = (winScroll / height) * 100;
+        document.getElementById('progress-bar').style.width = scrolled + '%';
+    });
+
+    const themeToggle = document.getElementById('theme-toggle');
+    let isDark = localStorage.getItem('theme') === 'dark';
+
+    if (isDark) {
+        themeToggle.textContent = '☀️ Светлая тема';
+    } else {
+        themeToggle.textContent = '🌙 Тёмная тема';
+    }
+
+    themeToggle.addEventListener('click', () => {
+        if (!isDark) {
+            document.body.classList.add('dark-theme');
+            themeToggle.textContent = '☀️ Светлая тема';
+            localStorage.setItem('theme', 'dark');
+        } else {
+            document.body.classList.remove('dark-theme');
+            themeToggle.textContent = '🌙 Тёмная тема';
+            localStorage.setItem('theme', 'light');
+        }
+        isDark = !isDark;
+    });
+
+    const goTop = document.getElementById('go-top');
+    
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 500) {
+            goTop.style.display = 'block';
+        } else {
+            goTop.style.display = 'none';
+        }
+    });
+    
+    goTop.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+</script>
+
+</body>
+</html>
