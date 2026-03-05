@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Сергей Алексеевич Лебедев | Источники</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧠</text></svg>">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+        }
+
+        body {
+            background: #f0f4f8;
+            color: #1e2b3a;
+            line-height: 1.6;
+            transition: background 0.3s, color 0.3s;
+        }
+
+        body.dark-theme {
+            background: #1a1a2e;
+            color: #e0e0e0;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        #progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 5px;
+            background: #ffb347;
+            width: 0%;
+            z-index: 1000;
+            transition: width 0.1s;
+        }
+
+        .main-nav {
+            background: #0b2545;
+            padding: 15px;
+            text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 999;
+            border-bottom: 3px solid #ffb347;
+        }
+
+        body.dark-theme .main-nav {
+            background: #1a1a2e;
+        }
+
+        .main-nav a {
+            color: white;
+            text-decoration: none;
+            margin: 0 20px;
+            font-weight: 500;
+            font-size: 1.1rem;
+            transition: color 0.3s;
+        }
+
+        .main-nav a:hover {
+            color: #ffb347;
+        }
+
+        #theme-toggle {
+            position: fixed;
+            top: 70px;
+            right: 20px;
+            background: white;
+            color: #0b2545;
+            border: none;
+            border-radius: 30px;
+            padding: 8px 20px;
+            cursor: pointer;
+            font-weight: bold;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            transition: background 0.3s, color 0.3s, transform 0.2s;
+            z-index: 1001;
+        }
+
+        body.dark-theme #theme-toggle {
+            background: #2a2a3e;
+            color: #ffb347;
+        }
+
+        #theme-toggle:hover {
+            transform: scale(1.05);
+        }
+
+        .page-header {
+            background: linear-gradient(145deg, #0b2545, #1b3b5c);
+            color: white;
+            padding: 60px 0 40px;
+            text-align: center;
+            border-bottom: 5px solid #ffb347;
+        }
+
+        .page-header h1 {
+            font-size: 3.2rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .page-header .subhead {
+            font-size: 1.4rem;
+            opacity: 0.9;
+        }
+
+        .sources-block {
+            background: white;
+            border-radius: 40px;
+            padding: 40px;
+            margin: 40px 0;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+        }
+
+        body.dark-theme .sources-block {
+            background: #2a2a3e;
+        }
+
+        .sources-block h2 {
+            font-size: 2rem;
+            color: #ffb347;
+            margin-bottom: 30px;
+            border-left: 5px solid #ffb347;
+            padding-left: 20px;
+        }
+
+        .sources-block ul {
+            list-style: none;
+            margin-bottom: 30px;
+        }
+
+        .sources-block li {
+            margin-bottom: 15px;
+            padding-left: 25px;
+            position: relative;
+            font-size: 1.1rem;
+        }
+
+        .sources-block li:before {
+            content: "📄";
+            color: #ffb347;
+            position: absolute;
+            left: 0;
+        }
+
+        .sources-block a {
+            color: #ffb347;
+            text-decoration: none;
+            font-weight: 500;
+            word-break: break-word;
+        }
+
+        .sources-block a:hover {
+            text-decoration: underline;
+        }
+
+        .sources-block .note {
+            margin-top: 30px;
+            padding: 20px;
+            background: #f0f4f8;
+            border-radius: 20px;
+            font-style: italic;
+            color: #1e2b3a;
+        }
+
+        body.dark-theme .sources-block .note {
+            background: #1a1a2e;
+            color: #e0e0e0;
+        }
+
+        footer {
+            background: #0b2545;
+            color: white;
+            text-align: center;
+            padding: 30px 0;
+            border-radius: 40px 40px 0 0;
+            margin-top: 80px;
+        }
+
+        #go-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: #ffb347;
+            border: none;
+            border-radius: 50px;
+            padding: 15px 25px;
+            cursor: pointer;
+            font-weight: bold;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            display: none;
+            z-index: 999;
+            transition: transform 0.2s;
+        }
+
+        #go-top:hover {
+            transform: translateY(-3px);
+        }
+
+        @media (max-width: 700px) {
+            .page-header h1 { font-size: 2.4rem; }
+            .main-nav a { margin: 0 10px; font-size: 0.9rem; }
+            #theme-toggle { top: 10px; right: 10px; }
+        }
+    </style>
+</head>
+<body>
+
+<div id="progress-bar"></div>
+
+<nav class="main-nav">
+    <a href="index.html">Главная</a>
+    <a href="bio.html">Биография</a>
+    <a href="achievements.html">Достижения</a>
+    <a href="memories.html">Воспоминания</a>
+    <a href="memory.html">Память</a>
+    <a href="gallery.html">Галерея</a>
+    <a href="sources.html">Источники</a>
+</nav>
+
+<button id="theme-toggle">🌙 Тёмная тема</button>
+
+<div class="page-header">
+    <div class="container">
+        <h1>Источники</h1>
+        <div class="subhead">Материалы, использованные при создании сайта</div>
+    </div>
+</div>
+
+<div class="container">
+
+    <div class="sources-block">
+        <h2>🌐 Сайты и онлайн-ресурсы</h2>
+        <ul>
+            <li><a href="https://www.computer-museum.ru" target="_blank">Виртуальный компьютерный музей</a></li>
+            <li><a href="https://www.prlib.ru" target="_blank">Президентская библиотека им. Б.Н. Ельцина</a></li>
+            <li><a href="https://besm-6.ru" target="_blank">Сайт, посвящённый БЭСМ-6</a></li>
+            <li><a href="https://ru.wikipedia.org/wiki/Лебедев,_Сергей_Алексеевич" target="_blank">Википедия: С.А. Лебедев</a></li>
+            <li><a href="https://ru.wikipedia.org/wiki/МЭСМ" target="_blank">Википедия: МЭСМ</a></li>
+            <li><a href="https://habr.com/ru/companies/ua-hosting/articles/388169/" target="_blank">Хабр: Советская вычислительная школа Сергея Лебедева</a></li>
+        </ul>
+    </div>
+
+    <div class="sources-block">
+        <h2>📚 Книги и статьи</h2>
+        <ul>
+            <li>Большая российская энциклопедия (статья «Лебедев»)</li>
+            <li>Журнал «Наука и жизнь», 2002, №5 (к 100-летию С.А. Лебедева)</li>
+            <li>Чернова Л. С.А. Лебедев: «Обоснуйте!» // От махин до роботов. В 2 книгах. Кн.2. – М.: Современник, 1990.</li>
+            <li>Сергей Алексеевич Лебедев // Биографический очерк. – К.: «Наукова думка», 1978.</li>
+            <li>Павлихин Г.П. Выдающиеся воспитанники МГТУ им. Н.Э. Баумана. – М.: Изд-во МГТУ, 2010.</li>
+        </ul>
+    </div>
+
+    <div class="sources-block">
+        <h2>📄 Предоставленные файлы</h2>
+        <ul>
+            <li><strong>Самохин В.П., Мещеринова К.В.</strong> Академик Сергей Алексеевич Лебедев (70 лет созданию советской вычислительной техники) // Машиностроение и компьютерные технологии. 2018. № 06. С. 18–88.</li>
+            <li><strong>Бурцев В.С. (отв. ред.) и др.</strong> Сергей Алексеевич Лебедев. К 100-летию со дня рождения основоположника отечественной электронной вычислительной техники. – М.: ФИЗМАТЛИТ, 2002.</li>
+        </ul>
+    </div>
+
+    <div class="sources-block">
+        <h2>📖 Мемуары и воспоминания</h2>
+        <ul>
+            <li>Малиновский Б.Н. История вычислительной техники в лицах. – Киев: «КИТ», 1995.</li>
+            <li>Малиновский Б.Н. Академик С. Лебедев. – Киев, 1992.</li>
+            <li>Черток Б.Е. Ракеты и люди. Горячие дни холодной войны. – М.: «РТСофт», 2016.</li>
+            <li>Черток Б.Е. Ракеты и люди. Лунная гонка. – М.: «РТСофт», 2013.</li>
+        </ul>
+    </div>
+
+    <div class="sources-block">
+        <h2>🎥 Документальные фильмы</h2>
+        <ul>
+            <li>Телевизионная передача на канале «Культура» от 8 ноября 2007 года, посвящённая С.А. Лебедеву</li>
+            <li>Документальный фильм Бориса Смирнова «Буря. Приказано уничтожить» из цикла «Тайны забытых побед»</li>
+        </ul>
+    </div>
+
+    <div class="sources-block">
+        <div class="note">
+            <p>Все материалы использованы в образовательных целях в рамках итогового проекта по курсу «История России».</p>
+            <p style="margin-top: 10px;">Сайт создан студентами Пермского государственного национального исследовательского университета (ПГНИУ) в 2026 году.</p>
+        </div>
+    </div>
+
+</div>
+
+<footer>
+    <p>Проект по истории России</p>
+    <p>Выполнили: Трубицин Тимофей и Ибраев Кирилл | Группа: ИТ-12, ИТ-11</p>
+    <p>Пермь, 2026</p>
+</footer>
+
+<button id="go-top">↑ Наверх</button>
+
+<script>
+    if (localStorage.getItem('theme') === 'dark') {
+        document.body.classList.add('dark-theme');
+    }
+
+    window.addEventListener('scroll', () => {
+        const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+        const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+        const scrolled = (winScroll / height) * 100;
+        document.getElementById('progress-bar').style.width = scrolled + '%';
+    });
+
+    const themeToggle = document.getElementById('theme-toggle');
+    let isDark = localStorage.getItem('theme') === 'dark';
+
+    if (isDark) {
+        themeToggle.textContent = '☀️ Светлая тема';
+    } else {
+        themeToggle.textContent = '🌙 Тёмная тема';
+    }
+
+    themeToggle.addEventListener('click', () => {
+        if (!isDark) {
+            document.body.classList.add('dark-theme');
+            themeToggle.textContent = '☀️ Светлая тема';
+            localStorage.setItem('theme', 'dark');
+        } else {
+            document.body.classList.remove('dark-theme');
+            themeToggle.textContent = '🌙 Тёмная тема';
+            localStorage.setItem('theme', 'light');
+        }
+        isDark = !isDark;
+    });
+
+    const goTop = document.getElementById('go-top');
+    
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 500) {
+            goTop.style.display = 'block';
+        } else {
+            goTop.style.display = 'none';
+        }
+    });
+    
+    goTop.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+</script>
+
+</body>
+</html>
